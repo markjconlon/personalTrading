@@ -1,0 +1,76 @@
+<h1>Accounts#show</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Net Deposits</th>
+      <th>Total Dividends</th>
+      <th>Snowball Percentage</th>
+    </tr>
+  </thead>
+<tbody>
+    <tr>
+    <td><%= @net_deposits %></td>
+    <td><%= @total_dividends %></td>
+    <td><%= @snowball_percentage %></td>
+    </tr>
+</tbody>
+</table>
+<h3>Active Positions</h3>
+<table>
+  <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Book Value</th>
+            <th>Sold Shares</th>
+            <th>Sold Price</th>
+            <th>Total Dividends</th>
+        </tr>
+  </thead>
+<tbody>
+<% @positions.each do |data| %>
+<% next if data[:shares] == 0%>
+    <tr>
+    <td><%= data[:ticker] %></td>
+    <td><%= data[:shares] %></td>
+    <td><%= data[:price] %></td>
+    <td><%= data[:book_value] %></td>
+    <td><%= data[:sold_shares] %></td>
+    <td><%= data[:sold_price] %></td>
+    <td><%= data[:total_dividends] %></td>
+    </tr>
+<% end %>
+</tbody>
+</table>
+
+<h3>Closed Positions</h3>
+<table>
+  <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Book Value</th>
+            <th>Sold Shares</th>
+            <th>Sold Price</th>
+            <th>Total Dividends</th>
+            <th>Closed Position PnL</th>
+        </tr>
+  </thead>
+<tbody>
+<% @positions.each do |data| %>
+<% next unless data[:shares] == 0%>
+    <tr>
+    <td><%= data[:ticker] %></td>
+    <td><%= data[:shares] %></td>
+    <td><%= data[:price] %></td>
+    <td><%= data[:book_value] %></td>
+    <td><%= data[:sold_shares] %></td>
+    <td><%= data[:sold_price] %></td>
+    <td><%= data[:total_dividends] %></td>
+    <td><%= data[:closed_position_p_n_l] %></td>
+    </tr>
+<% end %>
+</tbody>
+</table>
