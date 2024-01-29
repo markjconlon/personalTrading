@@ -13,7 +13,7 @@ class WealthSimpleSample
     end
     def self.massage(method)
         self.send(method).map do |item|
-            item.gsub!("\n",";;").gsub!(" | ", ";;").gsub!("$",";;").split(";;")
+            item.gsub("\n",";;").gsub(" | ", ";;").gsub("$",";;").split(";;")
         end
     end
     def self.massage_trades
@@ -23,11 +23,11 @@ class WealthSimpleSample
         self.trades.map.with_index do |item, index|
             next if item.include?("Cancelled") || item.include?("Expired")
 
-            arr = item.gsub!("\n",";;").gsub!(" | ", ";;").gsub!("$",";;").split(";;")
+            arr = item.gsub("\n",";;").gsub(" | ", ";;").gsub("$",";;").split(";;")
             details = self.trade_details[index]
             
             next if details.include?("Cancelled") || item.include?("Expired")
-            subbed_details = details.gsub!("Filled",";;").gsub!("Quantity",";;").gsub!("Total amount", ";;").gsub!(" x $",";;").split(";;")
+            subbed_details = details.gsub("Filled",";;").gsub("Quantity",";;").gsub("Total amount", ";;").gsub(" x $",";;").split(";;")
             
             data << {
                 ticker: arr[0].split(" ").first,

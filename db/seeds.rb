@@ -38,16 +38,17 @@ ActiveRecord::Base.transaction do
             stock: stock,
             account: mark_wealthsimple,
             datetime: trade[:datetime],
-            price: trade[:price].to_d * 100,
+            price: trade[:price].to_f * 100,
             shares: trade[:shares]
         )
     end
-    
+    WealthSimple.handle_stock_splits
+
     WealthSimple.massage(:transactions).each do |trans|
         Transaction.create(
             type: trans[0],
             datetime: trans[2].to_datetime,
-            amount: trans[3].to_d * 100,
+            amount: trans[3].gsub(",","").to_f * 100,
             account: mark_wealthsimple,
             currency: "CAD"
         )
@@ -57,7 +58,7 @@ ActiveRecord::Base.transaction do
         stock = Stock.find_by(ticker: trans[0].split(" ").first)
         Dividend.create(
             datetime: trans[2].to_datetime,
-            amount: trans[3].to_d * 100,
+            amount: trans[3].gsub(",","").to_f * 100,
             account: mark_wealthsimple,
             stock: stock,
             currency: "CAD"
