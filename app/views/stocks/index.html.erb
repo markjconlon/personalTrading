@@ -1,0 +1,18 @@
+<h1>Stocks#index</h1>
+<button><%= link_to "Add Stock", new_stock_path, method: :get %> </button>
+<table>
+  <thead>
+    <tr>
+      <th>Ticker</th>
+      <th>Currency</th>
+    </tr>
+  </thead>
+<tbody>
+<% @stocks.each do |stock| %>
+    <tr>
+    <td><%= link_to stock.ticker, { action: :show, id: stock.id}, method: :get %></td>
+    <td><%= stock.currency %></td>
+    </tr>
+<% end %>
+</tbody>
+</table>

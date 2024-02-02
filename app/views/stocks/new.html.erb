@@ -1,0 +1,7 @@
+<h1>Stocks#new</h1>
+<p>Find me in app/views/stocks/new.html.erb</p>
+<%= form_with model: @stock do |form| %>
+  <%= form.text_field :ticker %>
+  <%= form.select :currency, { "CAD" => "CAD", "USD" => "USD"}, selected: "CAD" %>
+  <%= form.submit %>
+<% end %>
