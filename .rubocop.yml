@@ -1,0 +1,13 @@
+Style/Encoding:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+
+Style/StringLiterals:
+ EnforcedStyle: double_quotes
+
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'db/seeds.rb'

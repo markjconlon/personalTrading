@@ -1,7 +1,7 @@
 class Owner < ApplicationRecord
-    has_many :accounts
+  has_many :accounts
 
-    def name
-        "#{firstname} #{lastname}"
-    end
+  def name
+    "#{firstname} #{lastname}"
+  end
 end

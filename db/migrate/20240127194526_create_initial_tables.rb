@@ -32,7 +32,7 @@ class CreateInitialTables < ActiveRecord::Migration[7.1]
     end
 
     create_table :stocks do |t|
-      t.string :ticker, null: false,  index: { unique: true }
+      t.string :ticker, null: false, index: { unique: true }
       t.string :currency, null: false, index: true
     end
 
