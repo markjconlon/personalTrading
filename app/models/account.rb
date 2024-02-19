@@ -7,6 +7,7 @@ class Account < ApplicationRecord
   has_many :withdrawals, -> { where type: "Withdrawal" }, class_name: "Transaction"
   has_many :dividends
   has_many :stocks, through: :trades
+  has_many :conversions
 
   def bought_positions
     buys.group_by(&:stock).transform_values do |buys|

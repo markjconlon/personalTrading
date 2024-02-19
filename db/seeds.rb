@@ -7,12 +7,12 @@ ActiveRecord::Base.transaction do
         {
             firstname: "Mark",
             lastname: "Conlon",
-            account_names: %w[ WealthSimpleTFSA TDTFSA TDRRSP CommonWealth]
+            account_names: %w[ WealthSimpleTFSA TDTFSA TDRRSP CommonWealth ]
         },
         {
             firstname: "Carolyn",
             lastname: "Conlon",
-            account_names: %w[ WealthSimpleTFSA TDRRSP]
+            account_names: %w[ WealthSimpleTFSA TDRRSP ]
         },
     ]
     account_holders.each do |owner|
@@ -53,7 +53,7 @@ ActiveRecord::Base.transaction do
             currency: "CAD"
         )
     end
-    
+
     WealthSimple.massage(:dividends).each do |trans|
         stock = Stock.find_by(ticker: trans[0].split(" ").first)
         Dividend.create(

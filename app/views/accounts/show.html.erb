@@ -1,4 +1,4 @@
-<h1>Accounts#show</h1>
+<h1>Accounts</h1>
 <table>
   <thead>
     <tr>
@@ -15,6 +15,9 @@
     </tr>
 </tbody>
 </table>
+
+<%= render "import_activity" %>
+
 <h3>Active Positions</h3>
 <table>
   <thead>
@@ -70,6 +73,26 @@
     <td><%= data[:sold_price] %></td>
     <td><%= data[:total_dividends] %></td>
     <td><%= data[:closed_position_p_n_l] %></td>
+    </tr>
+<% end %>
+</tbody>
+</table>
+
+<h3>Dividend History</h3>
+<table>
+  <thead>
+        <tr>
+            <th>Ticker</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+  </thead>
+<tbody>
+<% @last_dividends.each do |data| %>
+    <tr>
+    <td><%= data.stock[:ticker] %></td>
+    <td><%= data[:amount] %></td>
+    <td><%= data[:datetime] %></td>
     </tr>
 <% end %>
 </tbody>

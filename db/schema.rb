@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_01_27_194526) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_19_180544) do
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
     t.integer "owner_id", null: false
@@ -18,6 +18,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_01_27_194526) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_accounts_on_name"
     t.index ["owner_id"], name: "index_accounts_on_owner_id"
+  end
+
+  create_table "conversions", force: :cascade do |t|
+    t.integer "amount_in", null: false
+    t.integer "amount_out", null: false
+    t.datetime "datetime", null: false
+    t.string "currency_in", null: false
+    t.string "currency_out", null: false
+    t.integer "account_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id"], name: "index_conversions_on_account_id"
+    t.index ["currency_in"], name: "index_conversions_on_currency_in"
+    t.index ["currency_out"], name: "index_conversions_on_currency_out"
+    t.index ["datetime"], name: "index_conversions_on_datetime"
   end
 
   create_table "dividends", force: :cascade do |t|
