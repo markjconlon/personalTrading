@@ -3,7 +3,8 @@
 class Account < ApplicationRecord
   belongs_to :owner
   has_many :trades
-  has_many :buys, -> { where type: "Buy" }, class_name: "Trade"
+  has_many :drips, -> { where type: "Drip" }, class_name: "Trade"
+  has_many :buys, -> { where type: %w[Buy Drip] }, class_name: "Trade"
   has_many :sells, -> { where type: "Sell" }, class_name: "Trade"
   has_many :transactions
   has_many :deposits, -> { where type: "Deposit" }, class_name: "Transaction"
