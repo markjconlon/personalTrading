@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateInitialTables < ActiveRecord::Migration[7.1]
   def change
     create_table :accounts do |t|
@@ -17,8 +19,8 @@ class CreateInitialTables < ActiveRecord::Migration[7.1]
       t.integer :shares, null: false
       t.integer :price, null: false
       t.datetime :datetime, null: false, index: true
-      t.references :account, index: :true
-      t.references :stock, index: :true
+      t.references :account, index: true
+      t.references :stock, index: true
       t.timestamps
     end
 
@@ -26,8 +28,8 @@ class CreateInitialTables < ActiveRecord::Migration[7.1]
       t.integer :amount, null: false
       t.datetime :datetime, null: false, index: true
       t.string :currency, null: false, index: true
-      t.references :account, index: :true
-      t.references :stock, index: :true
+      t.references :account, index: true
+      t.references :stock, index: true
       t.timestamps
     end
 
@@ -41,7 +43,7 @@ class CreateInitialTables < ActiveRecord::Migration[7.1]
       t.datetime :datetime, null: false, index: true
       t.string :type, null: false, index: true
       t.string :currency, null: false, index: true
-      t.references :account, index: :true, null: false
+      t.references :account, index: true, null: false
       t.timestamps
     end
   end

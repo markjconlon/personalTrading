@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   resources :stocks, only: %i[index show new create]
   resources :accounts, only: %i[index show] do

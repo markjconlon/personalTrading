@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 class Account < ApplicationRecord
   belongs_to :owner
   has_many :trades
   has_many :buys, -> { where type: "Buy" }, class_name: "Trade"
   has_many :sells, -> { where type: "Sell" }, class_name: "Trade"
+  has_many :transactions
   has_many :deposits, -> { where type: "Deposit" }, class_name: "Transaction"
   has_many :withdrawals, -> { where type: "Withdrawal" }, class_name: "Transaction"
   has_many :dividends
@@ -36,7 +39,7 @@ class Account < ApplicationRecord
   end
 
   def all_positions
-    sold_positions_hash = sold_positions
+    sold_positions
     bought_positions.map do |stock, value|
       sold_position = sold_positions[stock]
       sold_shares = sold_position.nil? ? 0 : sold_position[:shares]

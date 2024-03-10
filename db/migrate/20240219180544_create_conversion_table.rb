@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateConversionTable < ActiveRecord::Migration[7.1]
   def change
     create_table :conversions do |t|
@@ -6,7 +8,7 @@ class CreateConversionTable < ActiveRecord::Migration[7.1]
       t.datetime :datetime, null: false, index: true
       t.string :currency_in, null: false, index: true
       t.string :currency_out, null: false, index: true
-      t.references :account, index: :true, null: false
+      t.references :account, index: true, null: false
       t.timestamps
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WealthSimpleSample
   def self.transactions
     # deposit and withdrawal filter on
