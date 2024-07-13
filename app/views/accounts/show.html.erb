@@ -24,8 +24,10 @@
         <tr>
             <th>Ticker</th>
             <th>Shares</th>
-            <th>Price</th>
+            <th>Book Price</th>
+            <th>Current Price</th>
             <th>Book Value</th>
+            <th>Current Value</th>
             <th>Sold Shares</th>
             <th>Sold Price</th>
             <th>Total Dividends</th>
@@ -38,7 +40,9 @@
     <td><%= data[:ticker] %></td>
     <td><%= data[:shares] %></td>
     <td><%= data[:price] %></td>
+    <td><%= data[:current_price] %></td>
     <td><%= data[:book_value] %></td>
+    <td><%= data[:current_value] %></td>
     <td><%= data[:sold_shares] %></td>
     <td><%= data[:sold_price] %></td>
     <td><%= data[:total_dividends] %></td>

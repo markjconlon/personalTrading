@@ -5,6 +5,8 @@
     <tr>
       <th>Ticker</th>
       <th>Currency</th>
+      <th>Price</th>
+      <th>Last Updated</th>
     </tr>
   </thead>
 <tbody>
@@ -12,6 +14,8 @@
     <tr>
     <td><%= link_to stock.ticker, { action: :show, id: stock.id}, method: :get %></td>
     <td><%= stock.currency %></td>
+    <td><%= stock.live_price %></td>
+    <td><%= stock.live_price_as_of %></td>
     </tr>
 <% end %>
 </tbody>
