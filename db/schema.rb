@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_19_180544) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_13_002200) do
   create_table "accounts", force: :cascade do |t|
     t.string "name", null: false
     t.integer "owner_id", null: false
@@ -59,6 +59,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_19_180544) do
   create_table "stocks", force: :cascade do |t|
     t.string "ticker", null: false
     t.string "currency", null: false
+    t.string "live_price_symbol"
+    t.integer "live_price"
+    t.datetime "live_price_as_of"
     t.index ["currency"], name: "index_stocks_on_currency"
     t.index ["ticker"], name: "index_stocks_on_ticker", unique: true
   end
