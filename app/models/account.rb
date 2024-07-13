@@ -48,12 +48,15 @@ class Account < ApplicationRecord
       price = value[:price]
       sold_price = (sold_position.nil? ? "-" : sold_position[:price])
       total_dividends = stock.dividends.total_value_by_account(self)
+      live_price = stock.live_price
       {
         stock:,
         ticker: stock.ticker,
         shares: net_shares,
         price: money_formatter(price),
+        current_price: live_price ? money_formatter(live_price) : "-",
         book_value: money_formatter(net_shares * value[:price]),
+        current_value: live_price ? money_formatter(net_shares * live_price) : "-",
         sold_shares:,
         sold_price: money_formatter(sold_price),
         total_dividends: money_formatter(total_dividends),

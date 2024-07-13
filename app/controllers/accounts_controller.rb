@@ -21,7 +21,7 @@ class AccountsController < ApplicationController
   end
 
   def money_formatter(value)
-    return value unless value.is_a? Integer || value.is_a?(Float)
+    return value unless value.is_a?(Integer) || value.is_a?(Float)
 
     "$#{value.to_f / 100}"
   end
