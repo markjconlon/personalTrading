@@ -1,4 +1,4 @@
-<h1><%= @account.name %></h1>
+<h1><a href='/accounts/'> Accounts: </a><%= @account.name %></h1>
 <table>
   <thead>
     <tr>
@@ -9,9 +9,9 @@
   </thead>
 <tbody>
     <tr>
-    <td><%= @net_deposits %></td>
-    <td><%= @total_dividends %></td>
-    <td><%= @snowball_percentage %></td>
+    <td>$<%= number_with_delimiter(@account.net_deposits_dollars, delimiter: ",", precision: 2) %></td>
+    <td>$<%= number_with_delimiter(@account.total_dividends_dollars, delimiter: ",", precision: 2) %></td>
+    <td><%= @account.snowball_percentage %>%</td>
     </tr>
 </tbody>
 </table>
@@ -26,11 +26,28 @@
             <th>Shares</th>
             <th>Book Price</th>
             <th>Current Price</th>
-            <th>Book Value</th>
-            <th>Current Value</th>
+            <th>
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=book_value&sort[direction]=asc' %>">	&uArr; </a>
+                Book Value
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=book_value&sort[direction]=desc' %>"> &dArr; </a>
+            </th>
+            <th>
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=current_value&sort[direction]=asc' %>">	&uArr; </a>
+                Current Value
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=current_value&sort[direction]=desc' %>"> &dArr; </a>
+            </th>
             <th>Sold Shares</th>
             <th>Sold Price</th>
-            <th>Total Dividends</th>
+            <th>
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=total_dividends&sort[direction]=asc' %>">	&uArr; </a>
+                Total Dividends
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=total_dividends&sort[direction]=desc' %>"> &dArr; </a>
+            </th>
+            <th>
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=live_p_n_l&sort[direction]=asc' %>">	&uArr; </a>
+                Current PnL
+              <a href="<%= '/accounts/' + @account.id.to_s + '/?sort[column]=live_p_n_l&sort[direction]=desc' %>"> &dArr; </a>
+            </th>
         </tr>
   </thead>
 <tbody>
@@ -39,13 +56,14 @@
     <tr>
     <td><%= data[:ticker] %></td>
     <td><%= data[:shares] %></td>
-    <td><%= data[:price] %></td>
-    <td><%= data[:current_price] %></td>
-    <td><%= data[:book_value] %></td>
-    <td><%= data[:current_value] %></td>
+    <td>$<%= number_with_delimiter(data[:price], delimiter: ",", precision: 2) %></td>
+    <td>$<%= number_with_delimiter(data[:current_price], delimiter: ",", precision: 2) %></td>
+    <td>$<%= number_with_delimiter(data[:book_value], delimiter: ",", precision: 2) %></td>
+    <td>$<%= number_with_delimiter(data[:current_value], delimiter: ",", precision: 2) %></td>
     <td><%= data[:sold_shares] %></td>
-    <td><%= data[:sold_price] %></td>
-    <td><%= data[:total_dividends] %></td>
+    <td>$<%= number_with_delimiter(data[:sold_price], delimiter: ",", precision: 2) %></td>
+    <td>$<%= number_with_delimiter(data[:total_dividends], delimiter: ",", precision: 2) %></td>
+    <td>$<%= number_with_delimiter(data[:live_p_n_l], delimiter: ",", precision: 2) %></td>
     </tr>
 <% end %>
 </tbody>

@@ -27,7 +27,7 @@ class Account < ApplicationRecord
   end
 
   def sold_positions
-    sells.group_by(&:stock).transform_values do |sells|
+    @sold_positions ||= sells.group_by(&:stock).transform_values do |sells|
       sold_shares = sells.sum(&:shares)
       average_price = sells.sum do |trade|
         trade.shares * trade.price
@@ -48,29 +48,71 @@ class Account < ApplicationRecord
       sold_price = (sold_position.nil? ? "-" : sold_position[:price])
       total_dividends = stock.dividends.total_value_by_account(self)
       live_price = stock.live_price
+      current_value = live_price ? net_shares * live_price : 0
+      book_value = net_shares * value[:price]
       {
         stock:,
         ticker: stock.ticker,
         shares: net_shares,
-        price: money_formatter(price),
-        current_price: live_price ? money_formatter(live_price) : "-",
-        book_value: money_formatter(net_shares * value[:price]),
-        current_value: live_price ? money_formatter(net_shares * live_price) : "-",
+        price: price.to_f / 100,
+        current_price: live_price ? live_price.to_f / 100 : "-",
+        book_value: book_value.to_f / 100,
+        current_value: live_price ? (net_shares * live_price).to_f / 100 : "-",
         sold_shares:,
-        sold_price: money_formatter(sold_price),
-        total_dividends: money_formatter(total_dividends),
-        closed_position_p_n_l: money_formatter(net_shares.zero? ? ((sold_price - price) * sold_shares + total_dividends) : "-")
+        sold_price: sold_price.to_f / 100,
+        total_dividends: total_dividends.to_f / 100,
+        closed_position_p_n_l: net_shares.zero? ? ((sold_price - price) * sold_shares + total_dividends).to_f / 100 : "-",
+        live_p_n_l: (current_value - book_value + total_dividends).to_f / 100
       }
     end
   end
 
-  def sorted_all_postions(key)
-    all_positions.sort_by { |p| p[key] }
+  def sorted_all_postions(direction:, column:)
+    sorted = all_positions.sort_by { |p| p[column] }
+    return sorted if direction == :asc
+
+    sorted.reverse
   end
 
   def money_formatter(value)
     return value unless value.is_a? Integer
 
     "$#{value.to_f / 100}"
+  end
+
+  def total_dividends
+    @total_dividends ||= dividends.sum(:amount)
+  end
+
+  def total_dividends_dollars
+    total_dividends.to_f / 100
+  end
+
+  def sum_deposits
+    @sum_deposits ||= deposits.sum(:amount)
+  end
+
+  def sum_deposits_dollars
+    sum_deposits.to_f / 100
+  end
+
+  def sum_withdrawals
+    @sum_withdrawals ||= withdrawals.sum(:amount)
+  end
+
+  def sum_withdrawals_dollars
+    sum_withdrawals.to_f / 100
+  end
+
+  def net_deposits
+    @net_deposits ||= sum_deposits - sum_withdrawals
+  end
+
+  def net_deposits_dollars
+    net_deposits.to_f / 100
+  end
+
+  def snowball_percentage
+    @snowball_percentage ||= ((total_dividends / net_deposits.to_f) * 100).round(4)
   end
 end
