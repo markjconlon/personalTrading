@@ -13,7 +13,7 @@ class YahooPriceScraper
   def update_market_data
     begin
       page
-    rescue => e
+    rescue StandardError => e
       puts e.message
       @page = "404"
     end
@@ -42,7 +42,7 @@ class YahooPriceScraper
 
   def main_page
     @agent.get(BASE_URL + "#{live_price_symbol}/")
-  rescue
+  rescue StandardError
     nil
   end
 
