@@ -40,7 +40,6 @@ class Account < ApplicationRecord
   end
 
   def all_positions
-    sold_positions
     bought_positions.map do |stock, value|
       sold_position = sold_positions[stock]
       sold_shares = sold_position.nil? ? 0 : sold_position[:shares]
