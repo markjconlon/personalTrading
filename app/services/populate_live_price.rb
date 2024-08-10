@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# takes an account which puts account activity into CSV
 class PopulateLivePrice
   KNOWN_TICKERS = {
     "SCHD" => "SCHD",
