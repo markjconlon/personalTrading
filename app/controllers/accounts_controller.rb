@@ -11,7 +11,7 @@ class AccountsController < ApplicationController
                .find(params[:id])
 
     @positions = positions
-    @last_dividends = @account.dividends.order(datetime: :desc).last(50)
+    @last_dividends = @account.dividends.order(datetime: :desc).first(50)
   end
 
   def positions

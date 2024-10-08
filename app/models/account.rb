@@ -13,10 +13,10 @@ class Account < ApplicationRecord
   has_many :stocks, through: :trades
   has_many :conversions
 
-  def bought_positions
-    buys.group_by(&:stock).transform_values do |buys|
-      bought_shares = buys.sum(&:shares)
-      average_price = buys.sum do |trade|
+  def bought_positions(date: Date.today)
+    buys.where(datetime: ..date).group_by(&:stock).transform_values do |value|
+      bought_shares = value.sum(&:shares)
+      average_price = value.sum do |trade|
         trade.shares * trade.price
       end / bought_shares
       {
@@ -26,10 +26,10 @@ class Account < ApplicationRecord
     end
   end
 
-  def sold_positions
-    @sold_positions ||= sells.group_by(&:stock).transform_values do |sells|
-      sold_shares = sells.sum(&:shares)
-      average_price = sells.sum do |trade|
+  def sold_positions(date: Date.today)
+    @sold_positions ||= sells.where(datetime: ..date).group_by(&:stock).transform_values do |value|
+      sold_shares = value.sum(&:shares)
+      average_price = value.sum do |trade|
         trade.shares * trade.price
       end / sold_shares
       {
@@ -39,14 +39,14 @@ class Account < ApplicationRecord
     end
   end
 
-  def all_positions
-    bought_positions.map do |stock, value|
-      sold_position = sold_positions[stock]
+  def all_positions(date: Date.today)
+    bought_positions(date: date).map do |stock, value|
+      sold_position = sold_positions(date: date)[stock]
       sold_shares = sold_position.nil? ? 0 : sold_position[:shares]
       net_shares = value[:shares] - sold_shares
       price = value[:price]
       sold_price = (sold_position.nil? ? "-" : sold_position[:price])
-      total_dividends = stock.dividends.total_value_by_account(self)
+      total_dividends = stock.dividends.where(datetime: date).total_value_by_account(self)
       live_price = stock.live_price
       current_value = live_price ? net_shares * live_price : 0
       book_value = net_shares * value[:price]
