@@ -69,6 +69,30 @@
 </tbody>
 </table>
 
+<h3>Buys and Sells</h3>
+<table>
+  <thead>
+        <tr>
+            <th>Type</th>
+            <th>Ticker</th>
+            <th>Shares</th>
+            <th>Price</th>
+            <th>Date</th>
+        </tr>
+  </thead>
+  <tbody>
+  <% @trades.each do |data| %>
+  <tr>
+    <td><%= data.type %></td>
+    <td><%= data.stock.ticker %></td>
+    <td><%= data.shares %></td>
+    <td><%= number_with_delimiter(data.price, delimiter: ",", precision: 2) %></td>
+    <td><%= data.datetime.to_date %></td>
+  </tr>
+  <% end %>
+  </tbody>
+<table>
+
 <h3>Closed Positions</h3>
 <table>
   <thead>

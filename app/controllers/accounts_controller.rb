@@ -12,6 +12,7 @@ class AccountsController < ApplicationController
 
     @positions = positions
     @last_dividends = @account.dividends.order(datetime: :desc).first(50)
+    @trades = @account.trades.order(datetime: :desc)
   end
 
   def positions
