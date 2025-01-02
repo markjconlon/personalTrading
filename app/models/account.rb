@@ -40,8 +40,8 @@ class Account < ApplicationRecord
   end
 
   def all_positions(date: Date.today)
-    bought_positions(date: date).map do |stock, value|
-      sold_position = sold_positions(date: date)[stock]
+    bought_positions(date:).map do |stock, value|
+      sold_position = sold_positions(date:)[stock]
       sold_shares = sold_position.nil? ? 0 : sold_position[:shares]
       net_shares = value[:shares] - sold_shares
       price = value[:price]
@@ -114,5 +114,9 @@ class Account < ApplicationRecord
 
   def snowball_percentage
     @snowball_percentage ||= ((total_dividends / net_deposits.to_f) * 100).round(4)
+  end
+
+  def first_deposit_date
+    @first_deposit_date ||= deposits.order(:datetime).first.datetime.to_date
   end
 end

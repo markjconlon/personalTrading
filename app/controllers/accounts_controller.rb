@@ -11,8 +11,12 @@ class AccountsController < ApplicationController
                .find(params[:id])
 
     @positions = positions
+    @current_positions = positions.select { |p| p[:shares].positive? }
+    @closed_positions = positions.reject { |p| p[:shares].positive? }
+    @current_value = @current_positions.map { |p| p[:current_value] }.reject { |v| v == "-" }.sum
     @last_dividends = @account.dividends.order(datetime: :desc).first(50)
     @trades = @account.trades.order(datetime: :desc)
+    @first_deposit_date = @account.deposits.order(:datetime).first
   end
 
   def positions

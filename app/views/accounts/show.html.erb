@@ -3,6 +3,9 @@
   <thead>
     <tr>
       <th>Net Deposits</th>
+      <th>Current Value</th>
+      <th>Gain %</th>
+      <th>First Deposit Date</th>
       <th>Total Dividends</th>
       <th>Snowball Percentage</th>
     </tr>
@@ -10,6 +13,9 @@
 <tbody>
     <tr>
     <td>$<%= number_with_delimiter(@account.net_deposits_dollars, delimiter: ",", precision: 2) %></td>
+    <td>$<%= number_with_delimiter(@current_value, delimiter: ",", precision: 2) %></td>
+    <td><%= ((@current_value / @account.net_deposits_dollars - 1) * 100).round(4) %>%</td>
+    <td><%= @account.first_deposit_date %></td>
     <td>$<%= number_with_delimiter(@account.total_dividends_dollars, delimiter: ",", precision: 2) %></td>
     <td><%= @account.snowball_percentage %>%</td>
     </tr>
@@ -51,8 +57,7 @@
         </tr>
   </thead>
 <tbody>
-<% @positions.each do |data| %>
-<% next if data[:shares] == 0%>
+<% @current_positions.each do |data| %>
     <tr>
     <td><%= data[:ticker] %></td>
     <td><%= data[:shares] %></td>
@@ -108,8 +113,7 @@
         </tr>
   </thead>
 <tbody>
-<% @positions.each do |data| %>
-<% next unless data[:shares] == 0%>
+<% @closed_positions.each do |data| %>
     <tr>
     <td><%= data[:ticker] %></td>
     <td><%= data[:shares] %></td>
