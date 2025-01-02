@@ -37,7 +37,7 @@ class YahooPriceScraper
   end
 
   def page
-    @page ||= main_page || cad_page
+    @page ||= main_page || cad_page || cn_page
   end
 
   def main_page
@@ -48,6 +48,12 @@ class YahooPriceScraper
 
   def cad_page
     @agent.get(CAD_BASE_URL + "#{live_price_symbol}/")
+  rescue StandardError
+    nil
+  end
+
+  def cn_page
+    @agent.get(BASE_URL + "#{@stock.ticker}.CN/")
   end
 
   def data_symbol_nodes
